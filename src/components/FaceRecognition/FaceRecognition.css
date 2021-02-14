@@ -2,16 +2,19 @@
     position:absolute ;
     display: flex;
     box-shadow:  0 0 0 3px #149df2 inset;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: center;
     text-align: center;
     cursor: pointer;
-   
-  
-
+    /* margin-left: 400px;
+    margin-right: 400px; */
 }
 
+
 .face {
+    display: flex;
+    justify-content: center;
+    text-align: center;
     position: relative;
 }
 

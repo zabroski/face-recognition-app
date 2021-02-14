@@ -6,17 +6,21 @@ import Logo from './components/Logo/Logo';
 import ImageLinForm from './components/ImageLinForm/ImageLinForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from  './components/FaceRecognition/FaceRecognition';
+import Signin from './components/Signin/Signin';
+// import { Route, Link } from 'react-router-dom';
+// import 'tachyons';
+
+
 import './App.css';
 // require('dotenv').config
 
 
 
 const app = new clarifai.App ({
-  apiKey:
-   
+  apiKey: 
 });
 
-const particleOption = {
+const particleOptions = {
   particles: {
     number: {
       value: 120,
@@ -36,7 +40,9 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box: {}
+      route: "signin",
+      box: {},
+     
     }
   }
 
@@ -56,7 +62,6 @@ class App extends Component {
 
   displayFaceBox = (box) => {
     this.setState({box: box})
-     console.log(box)
   }
 
   onInputChange = (e) => {
@@ -74,19 +79,39 @@ class App extends Component {
       .then(Response => this. displayFaceBox (this.calculateFaceLocation(Response)))
       .catch(err => console.log(err));
   }
+
+
+  onRouteChange =(route) => {
+    this.setState({route: route});
+
+  }
+
+
+
+
   render(){
     return (
       <div className="App">
 
       <Particles className="particles"
-        params={ particleOption}
+        params={ particleOptions}
       />
-        <Navigation />
-        <Logo />
-        < Rank />
-        <ImageLinForm onInputChange= {this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-        <FaceRecognition box={this.state.box} imageUrl= {this.state.imageUrl} />
+
+      <Navigation onRouteChange={this.onRouteChange}/>
+      { this.state.route === 'signin'
+        ?<Signin onRouteChange={this.onRouteChange} />
+        : <div>
+            <Logo />
+            <Rank />
+            <ImageLinForm
+            onInputChange={this.onInputChange}
+            onButtonSubmit={this.onButtonSubmit}
+             />
+              <FaceRecognition box={this.state.box} imageUrl={this.state.imageUrl}/>
+          </div>
+        }
       </div>
+  
     )
   }
 }
