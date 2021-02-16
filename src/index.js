@@ -6,8 +6,6 @@ import reportWebVitals from './reportWebVitals';
 // import { BrowserRouter as Router } from "react-router-dom";
 import 'tachyons';
 
-ReactDOM.render(
-<App />, document.getElementById('root'));
-
+ReactDOM.render(<App />, document.getElementById('root'));
 
 reportWebVitals();
