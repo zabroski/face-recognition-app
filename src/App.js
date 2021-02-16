@@ -19,7 +19,7 @@ import './App.css';
 
 
 const app = new clarifai.App ({
-  apiKey: 
+  apiKey: '897cde6076124c17a4657f7e32c38d46'
 });
 
 const particleOptions = {
@@ -100,9 +100,23 @@ class App extends Component {
       .predict(
       clarifai.FACE_DETECT_MODEL,
       this.state.input)
-      .then(Response => this. displayFaceBox (this.calculateFaceLocation(Response)))
+      .then(response =>{
+        if (response) {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: this.state.user.id
+            })
+          })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries : count}))
+            })
+        }
+         this. displayFaceBox (this.calculateFaceLocation(Response))
+      })
       .catch(err => console.log(err));
-      console.log(Response)
   }
 
 
@@ -134,7 +148,7 @@ class App extends Component {
       { route === 'home'
         ? <div>
         <Logo />
-        <Rank />
+        <Rank name={this.state.user.name} entries={this.state.user.entries} />
         <ImageLinForm
         onInputChange={this.onInputChange}
         onButtonSubmit={this.onButtonSubmit}
@@ -143,7 +157,7 @@ class App extends Component {
       </div>
         : (
           this.state.route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange} />
+          ? <Signin loadUser={this.loadUser}  onRouteChange={this.onRouteChange} />
           : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 
           )
