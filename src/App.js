@@ -14,8 +14,6 @@ import Signin from './components/Signin/Signin';
 
 
 import './App.css';
-// require('dotenv').config
-
 
 
 const app = new clarifai.App ({
@@ -166,6 +164,4 @@ class App extends Component {
   }
 }
 export default App;
-
-
 
