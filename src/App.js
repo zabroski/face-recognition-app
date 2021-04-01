@@ -7,13 +7,16 @@ import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import Register from './components/Register/Register';
 
+
 import FaceRecognition from  './components/FaceRecognition/FaceRecognition';
 import Signin from './components/Signin/Signin';
-// import { Route, Link } from 'react-router-dom';
+
 
 
 
 import './App.css';
+// require('dotenv').config
+
 
 
 const app = new clarifai.App ({
@@ -100,7 +103,7 @@ class App extends Component {
       this.state.input)
       .then(response =>{
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://calm-ravine-20557.herokuapp.com/image', {
             method: 'put',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -112,7 +115,7 @@ class App extends Component {
               this.setState(Object.assign(this.state.user, { entries : count}))
             })
         }
-         this. displayFaceBox (this.calculateFaceLocation(Response))
+         this.displayFaceBox (this.calculateFaceLocation(Response))
       })
       .catch(err => console.log(err));
   }
